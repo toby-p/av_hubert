@@ -7,6 +7,7 @@
 import glob
 import math
 import os
+import random
 import shutil
 import subprocess
 import tempfile
@@ -30,7 +31,8 @@ def read_csv(csv_file, delimit=','):
 
 
 def make_short_manifest(pretrain_dir, output_fn, min_interval: float = 0.4,
-                        max_duration: int = 15):
+                        max_duration: int = 15, fraction: float = None,
+                        seed: int = None):
     """Creates the CSV file which identifies the individual "sentences" in each
     video clip. A new sentence is created when the gap between 2 words is
     greater than `min_interval`.
@@ -43,12 +45,26 @@ def make_short_manifest(pretrain_dir, output_fn, min_interval: float = 0.4,
             the start of a new "sentence".
         max_duration: if the entire video is less than this value, then it
             is saved whole and not divided into "sentences".
+        fraction: if passed choose only a random subset of all available
+            subdirectories, approximately equal to `fraction` of total.
+        seed: only applies if `fraction` is used for reproducibility.
     """
     # Create dict to store processed data:
     df = {'fid': [], 'sent': [], 'start': [], 'end': []}
 
+    subdirs = list(filter(lambda s: "." not in s, os.listdir(pretrain_dir)))
+
+    # If fraction is passed, choose a random subset of all available subdirs:
+    if fraction is not None:
+        assert 0 < fraction < 1, f"Invalid fraction: {fraction}"
+        n_subdirs = int(len(subdirs) * fraction)
+        assert n_subdirs > 0, f"Fraction too small: {fraction}"
+        if seed is not None:
+            random.seed(seed)
+        random.shuffle(subdirs)
+        subdirs = subdirs[:n_subdirs]
+
     # Iterate through each subdir of video files:
-    subdirs = os.listdir(pretrain_dir)
     for subdir in tqdm(subdirs):
 
         # Get list of the text files which contain video transcripts
@@ -227,8 +243,8 @@ def trim_audio(csv_fn, raw_dir, output_dir, ffmpeg, rank, nshard):
         raw_dir: directory where the raw (pretrain) videos are located.
         output_dir: directory to create videos.
         ffmpeg: path to ffmpeg executable.
-        rank: ???
-        nshard: ???
+        rank: which 'shard' is being worked on.
+        nshard: total number of shards.
     """
     df = read_csv(csv_fn)
     raw2fid = OrderedDict()
@@ -266,13 +282,26 @@ def trim_audio(csv_fn, raw_dir, output_dir, ffmpeg, rank, nshard):
     return
 
 
-def trim_pretrain(root_dir, ffmpeg, rank=0, nshard=1, step=1):
+def trim_pretrain(root_dir, ffmpeg, rank=0, nshard=1, step=1,
+                  fraction: float = None, seed: int = None):
+    """Cut the input videos into "sentences" and save trimmmed audio/video files.
+
+    Args:
+        root_dir: root data directory.
+        ffmpeg: path to ffmpeg executable.
+        rank: which 'shard' is being worked on.
+        nshard: total number of shards.
+        step: either 1 to just create the manifest CSV, or 2 to actually process
+            the videos.
+        fraction: passed to `make_short_manifest`.
+        seed: passed to `make_short_manifest`.
+    """
     pretrain_dir = os.path.join(root_dir, 'pretrain')
     print(f"Trim original videos in pretrain")
     csv_fn = os.path.join(root_dir, 'short-pretrain.csv')
     if step == 1:
         print(f"Step 1. Make csv file {csv_fn}")
-        make_short_manifest(pretrain_dir, csv_fn)
+        make_short_manifest(pretrain_dir, csv_fn, fraction=fraction, seed=seed)
     else:
         print(f"Step 2. Trim video and audio")
         output_video_dir = os.path.join(root_dir, 'short-pretrain')
