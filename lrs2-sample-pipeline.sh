@@ -27,7 +27,7 @@ python3 /home/ubuntu/av_hubert/avhubert/preparation/detect_landmark.py \
  --nshard 1 --rank 0
 
 echo "PIPELINE STEP 2 - align_mouth"
-python /home/ubuntu/av_hubert/avhubert/preparation/align_mouth.py \
+python3 /home/ubuntu/av_hubert/avhubert/preparation/align_mouth.py \
  --video-direc ${lrs2} \
  --landmark_direc ${lrs2}/landmark \
  --filename-path ${lrs2}/file.list \
@@ -39,7 +39,7 @@ python /home/ubuntu/av_hubert/avhubert/preparation/align_mouth.py \
 
 # Step 3: Count Frames
 echo "PIPELINE STEP 3"
-python /home/ubuntu/av_hubert/avhubert/preparation/count_frames.py \
+python3 /home/ubuntu/av_hubert/avhubert/preparation/count_frames.py \
  --root ${lrs2} \
  --manifest ${lrs2}/file.list \
  --nshard 1 --rank 0
@@ -48,7 +48,7 @@ python /home/ubuntu/av_hubert/avhubert/preparation/count_frames.py \
 # Step 4: Set up data directory:
 echo "PIPELINE STEP 4"
 vocab_size=41427
-python /home/ubuntu/av_hubert/avhubert/preparation/lrs3_manifest.py \
+python3 /home/ubuntu/av_hubert/avhubert/preparation/lrs3_manifest.py \
  --lrs3 ${lrs2} \
  --manifest ${lrs2}/file.list \
  --valid-ids /home/ubuntu/w251-final-project/lrs2/untarred/lrs2-sample/lrs2-valid.id \
