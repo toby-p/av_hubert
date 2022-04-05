@@ -8,6 +8,6 @@ python3 /home/ubuntu/av_hubert/avhubert/preparation/detect_landmark.py \
  --landmark ${lrs2}/landmark \
  --manifest ${lrs2}/file.list \
  --cnn_detector /home/ubuntu/av_hubert/avhubert/preparation/cnn_face_detector.py \
- --face_detector /home/ubuntu/av_hubert/avhubert/preparation/face_detector.py \
+ --face_predictor /home/ubuntu/av_hubert/avhubert/preparation/face_detector.py \
  --ffmpeg ${ffmpeg} \
  --rank 0 --nshard 1
