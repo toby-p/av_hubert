@@ -11,7 +11,7 @@ SRC_MAIN = "/home/ubuntu/w251-final-project/lrs2/untarred/mvlrs_v1/main"
 TARGET_DIR = "/home/ubuntu/w251-final-project/lrs2/untarred/lrs2-sample"
 
 MANIFEST_SRC = {
-    "train.txt": SRC_PRETRAIN,
+    "train.txt": SRC_MAIN,
     "pretrain.txt": SRC_PRETRAIN,
     "test.txt": SRC_MAIN,
     "val.txt": SRC_MAIN,
