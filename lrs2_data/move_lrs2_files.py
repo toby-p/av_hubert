@@ -4,6 +4,8 @@ correct places."""
 import os
 import shutil
 
+from tqdm import tqdm
+
 SRC_DIR = "/home/ubuntu/w251-final-project/lrs2/untarred/mvlrs_v1/pretrain"
 TARGET_DIR = "/home/ubuntu/w251-final-project/lrs2/untarred/lrs2-sample"
 
@@ -26,7 +28,8 @@ for manifest in manifests:
 
     with open(os.path.join(os.getcwd(), manifest), "r") as f:
         videos = f.readlines()
-        for v in videos:
+        print(f"{manifest} - {len(videos):,} lines")
+        for v in tqdm(videos):
             v = v.split(" ")[0].rstrip()
             video_dir, filename = v.split("/")
             target_video_dir = os.path.join(target_dir, video_dir)
