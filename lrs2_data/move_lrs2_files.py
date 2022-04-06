@@ -6,17 +6,18 @@ import shutil
 
 from tqdm import tqdm
 
-SRC_DIR = "/home/ubuntu/w251-final-project/lrs2/untarred/mvlrs_v1/pretrain"
+SRC_PRETRAIN = "/home/ubuntu/w251-final-project/lrs2/untarred/mvlrs_v1/pretrain"
+SRC_MAIN = "/home/ubuntu/w251-final-project/lrs2/untarred/mvlrs_v1/main"
 TARGET_DIR = "/home/ubuntu/w251-final-project/lrs2/untarred/lrs2-sample"
 
-manifests = [
-    "pretrain.txt",
-    "test.txt",
-    "train.txt",
-    "val.txt",
-]
+MANIFEST_SRC = {
+    "train.txt": SRC_PRETRAIN,
+    "pretrain.txt": SRC_PRETRAIN,
+    "test.txt": SRC_MAIN,
+    "val.txt": SRC_MAIN,
+}
 
-for manifest in manifests:
+for manifest, src_dir in MANIFEST_SRC.items():
 
     manifest_target_dir = manifest.split(".")[0]
     if manifest_target_dir in ("train", "val"):
@@ -36,7 +37,7 @@ for manifest in manifests:
             if not os.path.isdir(target_video_dir):
                 os.mkdir(target_video_dir)
             for extension in ("mp4", "txt"):
-                src = os.path.join(SRC_DIR, video_dir, f"{filename}.{extension}")
+                src = os.path.join(src_dir, video_dir, f"{filename}.{extension}")
                 dest = os.path.join(target_video_dir, f"{filename}.{extension}")
                 shutil.copy(src, dest)
 
