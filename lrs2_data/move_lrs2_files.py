@@ -8,7 +8,7 @@ from tqdm import tqdm
 
 SRC_PRETRAIN = "/home/ubuntu/w251-final-project/lrs2/untarred/mvlrs_v1/pretrain"
 SRC_MAIN = "/home/ubuntu/w251-final-project/lrs2/untarred/mvlrs_v1/main"
-TARGET_DIR = "/home/ubuntu/w251-final-project/lrs2/untarred/lrs2-sample"
+TARGET_DIR = "/home/ubuntu/w251-final-project/lrs2/untarred/lrs2_full_dataset"
 
 MANIFEST_SRC = {
     "train.txt": SRC_MAIN,
