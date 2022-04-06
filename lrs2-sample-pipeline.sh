@@ -5,12 +5,12 @@ ffmpeg=/usr/bin/ffmpeg
 
 
 # Step 1: Data preparation
-#echo "PIPELINE STEP 1"
+echo "PIPELINE STEP 1"
 #fraction=0.01
 #seed=42
-#python3 /home/ubuntu/av_hubert/avhubert/preparation/w251_lrs3_script.py \
-# --lrs3 ${lrs2} \
-# --ffmpeg ${ffmpeg} \
+python3 /home/ubuntu/av_hubert/avhubert/preparation/w251_lrs3_script.py \
+ --lrs3 ${lrs2} \
+ --ffmpeg ${ffmpeg}
 # --fraction ${fraction} \
 # --seed ${seed}
 
