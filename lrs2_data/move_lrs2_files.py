@@ -27,7 +27,7 @@ for manifest in manifests:
     with open(os.path.join(os.getcwd(), manifest), "r") as f:
         videos = f.readlines()
         for v in videos:
-            v = v.split(" ")[0]
+            v = v.split(" ")[0].rstrip()
             video_dir, filename = v.split("/")
             target_video_dir = os.path.join(target_dir, video_dir)
             if not os.path.isdir(target_video_dir):
