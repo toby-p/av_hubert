@@ -5,31 +5,27 @@ ffmpeg=/usr/bin/ffmpeg
 
 
 # Step 1: Data preparation
-echo "PIPELINE STEP 1"
-#fraction=0.01
-#seed=42
-python3 /home/ubuntu/av_hubert/avhubert/preparation/w251_lrs3_script.py \
- --lrs3 ${lrs2} \
- --ffmpeg ${ffmpeg}
-# --fraction ${fraction} \
-# --seed ${seed}
+#echo "PIPELINE STEP 1"
+#python3 /home/ubuntu/av_hubert/avhubert/preparation/w251_lrs3_script.py \
+# --lrs3 ${lrs2} \
+# --ffmpeg ${ffmpeg}
 
 
 # Step 2: Landmark + ROI
-echo "PIPELINE STEP 2 - detect_landmark"
-python3 /home/ubuntu/av_hubert/avhubert/preparation/detect_landmark.py \
- --root ${lrs2} \
- --landmark ${lrs2}/landmark \
- --manifest ${lrs2}/file.list \
- --cnn_detector /home/ubuntu/w251-final-project/lrs2/dlib_models/mmod_human_face_detector.dat \
- --face_predictor /home/ubuntu/w251-final-project/lrs2/dlib_models/shape_predictor_68_face_landmarks.dat \
- --ffmpeg ${ffmpeg} \
- --nshard 1 --rank 0
+#echo "PIPELINE STEP 2 - detect_landmark"
+#python3 /home/ubuntu/av_hubert/avhubert/preparation/detect_landmark.py \
+# --root ${lrs2} \
+# --landmark ${lrs2}/landmark \
+# --manifest ${lrs2}/file.list \
+# --cnn_detector /home/ubuntu/w251-final-project/lrs2/dlib_models/mmod_human_face_detector.dat \
+# --face_predictor /home/ubuntu/w251-final-project/lrs2/dlib_models/shape_predictor_68_face_landmarks.dat \
+# --ffmpeg ${ffmpeg} \
+# --nshard 1 --rank 0
 
 echo "PIPELINE STEP 2 - align_mouth"
 python3 /home/ubuntu/av_hubert/avhubert/preparation/align_mouth.py \
  --video-direc ${lrs2} \
- --landmark_direc ${lrs2}/landmark \
+ --landmark-direc ${lrs2}/landmark \
  --filename-path ${lrs2}/file.list \
  --save-direc ${lrs2}/video \
  --mean-face /home/ubuntu/w251-final-project/lrs2/20words_mean_face.npy \
