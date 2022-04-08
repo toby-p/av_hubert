@@ -34,11 +34,11 @@ python3 /home/ubuntu/av_hubert/avhubert/preparation/align_mouth.py \
 
 
 # Step 3: Count Frames
-echo "PIPELINE STEP 3"
-python3 /home/ubuntu/av_hubert/avhubert/preparation/count_frames.py \
- --root ${lrs2} \
- --manifest ${lrs2}/file.list \
- --nshard 1 --rank 0
+#echo "PIPELINE STEP 3"
+#python3 /home/ubuntu/av_hubert/avhubert/preparation/count_frames.py \
+# --root ${lrs2} \
+# --manifest ${lrs2}/file.list \
+# --nshard 1 --rank 0
 
 
 # Step 4: Set up data directory:
@@ -46,6 +46,6 @@ echo "PIPELINE STEP 4"
 vocab_size=41427
 python3 /home/ubuntu/av_hubert/avhubert/preparation/lrs3_manifest.py \
  --lrs3 ${lrs2} \
- --manifest ${lrs2}/file.list \
  --valid-ids /home/ubuntu/w251-final-project/lrs2/untarred/lrs2-sample/lrs2-valid.id \
  --vocab-size ${vocab_size}
+# --manifest ${lrs2}/file.list \
