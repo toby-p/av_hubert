@@ -57,7 +57,7 @@ echo "PIPELINE STEP 5 - FINETUNING MODEL"
 data=/home/ubuntu/w251-final-project/lrs2/untarred/lrs2-sample/433h_data
 fairseq-hydra-train \
  --config-dir /home/ubuntu/av_hubert/avhubert/conf/finetune \
- --config-name self_large_vox_433h.yaml \
+ --config-name large_lrs3_433h.yaml \
  task.data=${data} \
  task.label_dir=${data} \
  task.tokenizer_bpe_model=/home/ubuntu/w251-final-project/lrs2/untarred/lrs2-sample/spm6850 \
