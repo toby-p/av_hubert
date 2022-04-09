@@ -55,14 +55,14 @@ ffmpeg=/usr/bin/ffmpeg
 # Step 5: Finetune model:
 echo "PIPELINE STEP 5 - FINETUNING MODEL"
 data=/home/ubuntu/w251-final-project/lrs2/untarred/lrs2-sample/433h_data
-#config_name=large_lrs3_433h.yaml
-config_name=self_large_vox_433h.yaml
+config_name=large_lrs3_433h.yaml
+#config_name=self_large_vox_433h.yaml
 fairseq-hydra-train \
  --config-dir /home/ubuntu/av_hubert/avhubert/conf/finetune \
  --config-name ${config_name} \
  task.data=${data} \
  task.label_dir=${data} \
- task.tokenizer_bpe_model=/home/ubuntu/w251-final-project/lrs2/untarred/lrs2-sample/spm6850 \
+ task.tokenizer_bpe_model=/home/ubuntu/w251-final-project/lrs2/untarred/lrs2-sample/spm6850/spm_unigram6850.model \
  model.w2v_path=/home/ubuntu/w251-final-project/models/large_vox_iter5.pt \
  hydra.run.dir=/home/ubuntu/w251-final-project/finetune \
  common.user_dir=`pwd`
