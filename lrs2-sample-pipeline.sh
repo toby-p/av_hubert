@@ -60,7 +60,7 @@ fairseq-hydra-train \
  --config-name self_large_vox_433h.yaml \
  task.data=${data} \
  task.label_dir=${data} \
- task.tokenizer_bpe_model=sentencepiece \
+ task.tokenizer_bpe_model=/home/ubuntu/w251-final-project/lrs2/untarred/lrs2-sample/spm6850 \
  model.w2v_path=/home/ubuntu/w251-final-project/models/large_vox_iter5.pt \
  hydra.run.dir=/home/ubuntu/w251-final-project/finetune \
  common.user_dir=`pwd`
