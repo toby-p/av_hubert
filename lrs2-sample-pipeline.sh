@@ -22,15 +22,15 @@ ffmpeg=/usr/bin/ffmpeg
 # --ffmpeg ${ffmpeg} \
 # --nshard 1 --rank 0
 
-echo "PIPELINE STEP 2 - align_mouth"
-python3 /home/ubuntu/av_hubert/avhubert/preparation/align_mouth.py \
- --video-direc ${lrs2} \
- --landmark-direc ${lrs2}/landmark \
- --filename-path ${lrs2}/file.list \
- --save-direc ${lrs2}/video \
- --mean-face /home/ubuntu/w251-final-project/lrs2/20words_mean_face.npy \
- --ffmpeg ${ffmpeg} \
- --nshard 1 --rank 0
+#echo "PIPELINE STEP 2 - align_mouth"
+#python3 /home/ubuntu/av_hubert/avhubert/preparation/align_mouth.py \
+# --video-direc ${lrs2} \
+# --landmark-direc ${lrs2}/landmark \
+# --filename-path ${lrs2}/file.list \
+# --save-direc ${lrs2}/video \
+# --mean-face /home/ubuntu/w251-final-project/lrs2/20words_mean_face.npy \
+# --ffmpeg ${ffmpeg} \
+# --nshard 1 --rank 0
 
 
 # Step 3: Count Frames
@@ -42,11 +42,25 @@ python3 /home/ubuntu/av_hubert/avhubert/preparation/align_mouth.py \
 
 
 # Step 4: Set up data directory:
-echo "PIPELINE STEP 4"
+#echo "PIPELINE STEP 4"
 #vocab_size=41427
-vocab_size=6850
-python3 /home/ubuntu/av_hubert/avhubert/preparation/lrs3_manifest.py \
- --lrs3 ${lrs2} \
- --valid-ids /home/ubuntu/w251-final-project/lrs2/untarred/lrs2-sample/lrs2-valid.id \
- --vocab-size ${vocab_size}
+#vocab_size=6850
+#python3 /home/ubuntu/av_hubert/avhubert/preparation/lrs3_manifest.py \
+# --lrs3 ${lrs2} \
+# --valid-ids /home/ubuntu/w251-final-project/lrs2/untarred/lrs2-sample/lrs2-valid.id \
+# --vocab-size ${vocab_size}
 # --manifest ${lrs2}/file.list \
+
+
+# Step 5: Finetune model:
+echo "PIPELINE STEP 4 - FINETUNING MODEL"
+data=/home/ubuntu/w251-final-project/lrs2/untarred/lrs2-sample/433h_data
+fairseq-hydra-train \
+ --config-dir /home/ubuntu/av_hubert/avhubert/conf/finetune \
+ --config-name large_lrs3_433h.yaml \
+ task.data=${data} \
+ task.label_dir=${data} \
+ task.tokenizer_bpe_model=sentencepiece \
+ model.w2v_path=/home/ubuntu/w251-final-project/models/large_vox_iter5.pt \
+ hydra.run.dir=/home/ubuntu/w251-final-project/finetune \
+ common.user_dir=`pwd`
