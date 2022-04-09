@@ -23,7 +23,7 @@ distributed_training:
   nprocs_per_node: 8
 
 task:
-  _name: av_hubert_pretraining
+  _name: hubert_pretraining
   is_s2s: true
   data: ???
   label_dir: ???
