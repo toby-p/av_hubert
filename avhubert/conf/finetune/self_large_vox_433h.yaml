@@ -16,10 +16,10 @@ checkpoint:
   maximize_best_checkpoint_metric: true
 
 distributed_training:
-  ddp_backend: c10d
-  find_unused_parameters: true
-  distributed_world_size: 32
-  distributed_port: 29671
+  ddp_backend: no_c10d
+  find_unused_parameters: false
+  distributed_world_size: 1
+  distributed_port: 0
   nprocs_per_node: 8
 
 task:
