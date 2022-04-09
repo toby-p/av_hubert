@@ -43,7 +43,8 @@ python3 /home/ubuntu/av_hubert/avhubert/preparation/align_mouth.py \
 
 # Step 4: Set up data directory:
 echo "PIPELINE STEP 4"
-vocab_size=41427
+#vocab_size=41427
+vocab_size=6850
 python3 /home/ubuntu/av_hubert/avhubert/preparation/lrs3_manifest.py \
  --lrs3 ${lrs2} \
  --valid-ids /home/ubuntu/w251-final-project/lrs2/untarred/lrs2-sample/lrs2-valid.id \
